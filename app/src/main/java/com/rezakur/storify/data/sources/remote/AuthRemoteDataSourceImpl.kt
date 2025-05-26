@@ -4,8 +4,9 @@ import com.rezakur.storify.core.utils.Either
 import com.rezakur.storify.core.utils.Failure
 import com.rezakur.storify.data.sources.remote.response.LoginResponse
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class AuthRemoteDataSourceImpl(private val storifyApi: StorifyApi) : AuthRemoteDataSource {
+class AuthRemoteDataSourceImpl @Inject constructor(private val storifyApi: StorifyApi) : AuthRemoteDataSource {
     override suspend fun login(
         email: String,
         password: String

@@ -4,8 +4,9 @@ import com.rezakur.storify.core.base.UseCase
 import com.rezakur.storify.core.utils.Either
 import com.rezakur.storify.core.utils.Failure
 import com.rezakur.storify.domain.repositories.AuthRepository
+import javax.inject.Inject
 
-class LoginUseCase(private val authRepository: AuthRepository) :
+class LoginUseCase @Inject constructor(private val authRepository: AuthRepository) :
     UseCase<LoginUseCaseParams, Either<Failure, Pair<Boolean, String>>> {
 
     override suspend fun invoke(params: LoginUseCaseParams): Either<Failure, Pair<Boolean, String>> =

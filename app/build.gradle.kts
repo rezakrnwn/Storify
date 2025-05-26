@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -20,10 +21,15 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -47,6 +53,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // Networking
     implementation(libs.retrofit)
@@ -60,6 +69,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
+    // Storage
+    implementation(libs.androidx.datastore.preferences)
+
     // Unit Test
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
@@ -70,4 +82,7 @@ dependencies {
     // UI Test
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+
 }

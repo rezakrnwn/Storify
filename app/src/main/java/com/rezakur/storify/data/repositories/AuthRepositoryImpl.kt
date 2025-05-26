@@ -4,8 +4,9 @@ import com.rezakur.storify.core.utils.Either
 import com.rezakur.storify.core.utils.Failure
 import com.rezakur.storify.data.sources.remote.AuthRemoteDataSource
 import com.rezakur.storify.domain.repositories.AuthRepository
+import javax.inject.Inject
 
-class AuthRepositoryImpl(private val authRemoteDataSource: AuthRemoteDataSource) : AuthRepository {
+class AuthRepositoryImpl @Inject constructor(private val authRemoteDataSource: AuthRemoteDataSource) : AuthRepository {
     override suspend fun login(
         email: String,
         password: String

@@ -5,8 +5,23 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="16dp"
     tools:context=".presentation.login.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_loading"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#80808080"
+        tools:visibility="visible"
+        >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_login_here"
@@ -14,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="16dp"
         android:text="Login Here!"
         android:textStyle="bold"
         android:textSize="24sp"
@@ -22,6 +38,7 @@
     <TextView
         android:id="@+id/tv_login_desc1"
         android:layout_below="@+id/tv_login_here"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -31,6 +48,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         android:layout_below="@+id/tv_login_desc1"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -50,10 +68,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
         android:layout_below="@+id/til_email"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:expandedHintEnabled="false"
+        app:endIconMode="password_toggle"
         android:hint="Password"
         >
 
@@ -61,6 +81,7 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="Input your password"
             />
 
@@ -69,6 +90,7 @@
     <Button
         android:id="@+id/btn_login"
         android:layout_below="@+id/til_password"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -77,6 +99,7 @@
 
     <LinearLayout
         android:layout_below="@+id/btn_login"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
