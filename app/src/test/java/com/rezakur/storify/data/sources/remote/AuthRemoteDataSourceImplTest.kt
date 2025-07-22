@@ -3,6 +3,7 @@ package com.rezakur.storify.data.sources.remote
 import com.rezakur.storify.DummyData
 import com.rezakur.storify.MainDispatcherRule
 import com.rezakur.storify.core.extensions.getLeft
+import com.rezakur.storify.core.extensions.getRight
 import com.rezakur.storify.core.extensions.isLeft
 import com.rezakur.storify.core.extensions.isRight
 import com.rezakur.storify.core.utils.Either
@@ -34,6 +35,7 @@ class AuthRemoteDataSourceImplTest {
         authRemoteDataSourceImpl = AuthRemoteDataSourceImpl(storifyApi)
     }
 
+    // LOGIN
     @Test
     fun `login should return Either Right when api return 200 OK`() = runTest {
         // arrange
@@ -76,6 +78,52 @@ class AuthRemoteDataSourceImplTest {
         verify(storifyApi, atLeast(1)).login(any(), any())
         Assert.assertTrue(result.isLeft)
         Assert.assertTrue(result.getLeft() is Failure.NetworkError)
-        Assert.assertEquals((result.getLeft() as Failure.NetworkError).errorCode, exception.code())
+        Assert.assertEquals(exception.code(), (result.getLeft() as Failure.NetworkError).errorCode)
+    }
+
+    // REGISTER
+    @Test
+    fun `register should return Either Right when api return 200 OK`() = runTest {
+        // arrange
+        val name = "Reza K."
+        val email = "rez@getnada.com"
+        val password = "123321"
+        val response = DummyData.registerResponseSuccess()
+        whenever(storifyApi.register(name = name, email = email, password = password)).thenReturn(
+            response
+        )
+
+        // act
+        val result =
+            authRemoteDataSourceImpl.register(name = name, email = email, password = password)
+
+        // assert
+        verify(storifyApi).register(name = name, email = email, password = password)
+        verify(storifyApi, atLeast(1)).register(any(), any(), any())
+        Assert.assertTrue(result.isRight)
+        Assert.assertEquals(response.error, result.getRight()?.error)
+        Assert.assertEquals(response.message, result.getRight()?.message)
+    }
+
+    @Test
+    fun `register should return Either Left when api return 400 Bad Request`() = runTest {
+        // arrange
+        val name = "Reza K."
+        val email = "rez@getnada.com"
+        val password = "123321"
+        val exception = DummyData.registerResponseFailed()
+        whenever(storifyApi.register(name = name, email = email, password = password)).thenThrow(
+            exception
+        )
+
+        // act
+        val result =
+            authRemoteDataSourceImpl.register(name = name, email = email, password = password)
+
+        // assert
+        verify(storifyApi, atLeast(1)).register(any(), any(), any())
+        Assert.assertTrue(result.isLeft)
+        Assert.assertTrue(result.getLeft() is Failure.NetworkError)
+        Assert.assertEquals(exception.code(), (result.getLeft() as Failure.NetworkError).errorCode)
     }
 }

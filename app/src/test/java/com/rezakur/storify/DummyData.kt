@@ -1,7 +1,7 @@
 package com.rezakur.storify
 
 import com.rezakur.storify.data.sources.remote.response.LoginResponse
-import okhttp3.ResponseBody
+import com.rezakur.storify.data.sources.remote.response.RegisterResponse
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
@@ -24,4 +24,16 @@ object DummyData {
                 "{'message':'email or password incorrect'}".toResponseBody()
             )
         )
+
+    fun registerResponseSuccess() = RegisterResponse(
+        error = false,
+        message = "User Created",
+    )
+
+    fun registerResponseFailed() = HttpException(
+        Response.error<String>(
+            400,
+            "{\"error\": true,\"message\": \"Email is already taken\"}".toResponseBody()
+        )
+    )
 }
