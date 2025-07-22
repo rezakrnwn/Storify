@@ -23,4 +23,21 @@ class AuthRepositoryImpl @Inject constructor(private val authRemoteDataSource: A
             is Either.Left -> Either.Left(result.value)
         }
     }
+
+    override suspend fun register(
+        name: String,
+        email: String,
+        password: String
+    ): Either<Failure, String> {
+        val result = authRemoteDataSource.register(name = name, email = email, password = password)
+        return when (result) {
+            is Either.Right -> Either.Right(
+                result.value.message ?: ""
+            )
+
+            is Either.Left -> Either.Left(
+                result.value
+            )
+        }
+    }
 }
